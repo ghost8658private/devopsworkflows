@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout Source Repo
-        uses: actions/checkout@v2  # You can use a specific version here if needed
+        uses: actions/checkout@v3  # You can use a specific version here if needed
         with:
           repository: ghost8658private/ttesting
           ref: main
