@@ -2,8 +2,6 @@ name: Mirror to public
 
 on:
   push:
-    branches:
-      - main  # Adjust the branch name as needed
   workflow_dispatch:
 
 jobs:
