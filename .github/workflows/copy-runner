@@ -6,13 +6,14 @@ on:
 jobs:
   mirror_branch_to_public:
     uses: workflow to run
-    with:
-      source-repo-name: 
-      source-branch: dlk
-      target-repo-name:
-      target-repo-url:
-      base-branch:
-      main-sha:
-      tmo-main-sha:
+    with: ghost8658private/ttesting/.github/workflows/copy.yml
+      source-repo-url: https://github.com/ghost8658private/ttesting.git
+      source-repo-name: ttesting
+      source-branch: mainn
+      target-repo-name: trtos-ttesting
+      target-repo-url: https://github.com/ghost8658private/trtos.git
+      base-branch: tmo-main
+      main-sha: 8b29205c1cca9842486470c16b68bb128242e8ac
+      tmo-main-sha: 2891ad05e066bffb7ceb86655f0d34cced21ef50
     secrets:
-      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
