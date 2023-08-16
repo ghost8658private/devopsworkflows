@@ -1,12 +1,13 @@
-Name: Mirror to public
+name: Mirror to public
 
 on: 
-  workflow_dispatch
+  push:
+  workflow_dispatch:
 
 jobs:
   mirror_branch_to_public:
-    uses: workflow to run
-    with: ghost8658private/ttesting/.github/workflows/copy.yml
+    uses: ghost8658private/ttesting/.github/workflows/copy.yml
+    with: 
       source-repo-url: https://github.com/ghost8658private/ttesting.git
       source-repo-name: ttesting
       source-branch: mainn
