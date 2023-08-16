@@ -26,16 +26,17 @@ jobs:
             const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
             const workflow_id = 'copy.yml';  # Adjust to the actual workflow file name
             
-            await octokit.actions.createWorkflowDispatch({
+            await octokit.rest.actions.createWorkflowDispatch({
               owner,
               repo,
               workflow_id,
-              ref: 'main',  # Replace with the desired branch
+              ref: 'main',  // Replace with the desired branch
               inputs: {
-                source-branch: 'mainn',  # Replace with the desired source branch
-                target-repo-name: 'trtos',
-                target-repo-url: 'https://github.com/ghost8658private/trtos.git',  # Missing comma here
-                base-branch: 'tmo-main',
-                source-repo-name: 'ttesting'
+                'source-branch': 'mainn',  // Replace with the desired source branch
+                'target-repo-name': 'trtos',
+                'target-repo-url': 'https://github.com/ghost8658private/trtos.git',
+                'base-branch': 'tmo-main',
+                'source-repo-name': 'ttesting'
               }
             });
+            
