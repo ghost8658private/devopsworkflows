@@ -6,7 +6,7 @@ on:
 
 jobs:
   mirror_branch_to_public:
-    uses: ghost8658private/ttesting/.github/workflows/copy.yml
+    uses: ttesting/.github/workflows/copy.yml
     with: 
       source-repo-name: ttesting
       source-branch: mainn
