@@ -8,7 +8,6 @@ jobs:
   mirror_branch_to_public:
     uses: ghost8658private/ttesting/.github/workflows/copy.yml
     with: 
-      source-repo-url: https://github.com/ghost8658private/ttesting.git
       source-repo-name: ttesting
       source-branch: mainn
       target-repo-name: trtos-ttesting
