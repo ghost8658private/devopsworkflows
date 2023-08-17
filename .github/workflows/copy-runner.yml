@@ -20,4 +20,4 @@ jobs:
       - name: Mirror branch
         run: |
           git fetch --all
-          git merge --allow-unrelated-histories ghost8658private/devopsworkflows/power ghost8658private/ttesting/power
+          git merge --allow-unrelated-histories devopsworkflows/power ttesting/power
