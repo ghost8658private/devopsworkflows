@@ -3,13 +3,13 @@ name: Mirror Branch
 on:
   workflow_call:
     inputs:
-      source_repo:
+      source-repo:
         required: true
         type: string
-      source_branch:
+      source-branch:
         required: true
         type: string
-      destination_branch:
+      destination-branch:
         required: true
         type: string
     secrets:
@@ -28,7 +28,7 @@ jobs:
       - name: mirror main
         uses: repo-sync/github-sync@v2
         with:
-          source_repo: ${{ inputs.source_repo }}
-          source_branch: ${{ inputs.source_branch }}
-          destination_branch: ${{ inputs.destination_branch }}
+          source_repo: ${{ inputs.source-repo }}
+          source_branch: ${{ inputs.source-branch }}
+          destination_branch: ${{ inputs.destination-branch }}
           github_token: ${{ secrets.PAT_TOKEN }}
