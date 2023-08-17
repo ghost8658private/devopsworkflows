@@ -1,42 +1,41 @@
-name: Mirror to public
+name: Mirror Branch to Another Repo
 
 on:
   push:
-  workflow_dispatch:
+    branches:
+      - power
 
 jobs:
-  call_mirror_workflow:
+  mirror:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source Repo
-        uses: actions/checkout@v3  # You can use a specific version here if needed
-        with:
-          repository: ghost8658private/ttesting
-          ref: main
-          token: ${{ secrets.PAT_TOKEN }}
-          subdirectory: .github/workflows
+    - name: Checkout source code
+      uses: actions/checkout@v2
 
-      - name: Run Mirror Workflow in Target Repo
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const token = process.env.PAT_TOKEN;
-            const octokit = new Octokit({ auth: token });
-            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-            const workflow_id = 'copy.yml';  # Adjust to the actual workflow file name
-            
-            await octokit.rest.actions.createWorkflowDispatch({
-              owner,
-              repo,
-              workflow_id,
-              ref: 'main',  // Replace with the desired branch
-              inputs: {
-                'source-branch': 'mainn',  // Replace with the desired source branch
-                'target-repo-name': 'trtos',
-                'target-repo-url': 'https://github.com/ghost8658private/trtos.git',
-                'base-branch': 'tmo-main',
-                'source-repo-name': 'ttesting'
-              }
-            });
-            
+    - name: Push to target repository
+      env:
+        SOURCE_TOKEN: ${{ secrets.PAT_TOKEN }}
+        TARGET_TOKEN: ${{ secrets.PAT_TOKEN }}
+        SOURCE_BRANCH: power
+        TARGET_BRANCH: power
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+        # Clone the target repository
+        git clone https://github.com/ghost8658private/ttesting.git
+        cd ttesting
+
+        # Fetch the source branch
+        git fetch --no-tags --prune --depth=1 origin "+refs/heads/${SOURCE_BRANCH}:refs/remotes/origin/${SOURCE_BRANCH}"
+
+        # Reset target branch to source branch state
+        git checkout ${TARGET_BRANCH}
+        git reset --hard origin/${SOURCE_BRANCH}
+
+        # Force push to target branch
+        git push origin ${TARGET_BRANCH} --force
+
+        cd ..
+
