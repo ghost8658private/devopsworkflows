@@ -34,8 +34,9 @@ jobs:
         git checkout ${TARGET_BRANCH}
         git reset --hard origin/${SOURCE_BRANCH}
 
-        # Force push to target branch
-        git push origin ${TARGET_BRANCH} --force
-
-        cd ..
+    - name: GitHub Push
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.PAT_TOKEN }}
+        branch: power
 
