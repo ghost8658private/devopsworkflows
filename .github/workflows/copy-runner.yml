@@ -34,7 +34,7 @@ jobs:
         # Reset target branch to source branch state
         git checkout ${TARGET_BRANCH}
         git reset --hard origin/${SOURCE_BRANCH}
-        git merge origin/${SOURCE_BRANCH
+        git merge origin/${SOURCE_BRANCH}
 
     - name: GitHub Push
       uses: ad-m/github-push-action@v0.6.0
