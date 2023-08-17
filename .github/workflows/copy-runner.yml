@@ -3,7 +3,7 @@ name: Mirror Branch
 on:
   push:
     branches:
-      - power
+      - newpower
 
 jobs:
   repo-sync:
