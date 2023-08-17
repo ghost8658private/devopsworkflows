@@ -25,7 +25,6 @@ jobs:
 
       - name: Mirror branch
         run: |
-          cd ttesting
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git merge --ff-only origin/power
