@@ -9,15 +9,13 @@ jobs:
   repo-sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
+      - uses: actions/checkout@v2
 
       - name: repo-sync
         uses: repo-sync/github-sync@v2
         with:
           source_repo: 'ghost8658private/ttesting'
           source_branch: 'power'
-          destination_repo: 'ghost8658private/fourth'
-          destination_branch: 'power'
+          target_repo: 'ghost8658private/fourth'
+          target_branch: 'power'
           github_token: ${{ secrets.PAT_TOKEN }}
