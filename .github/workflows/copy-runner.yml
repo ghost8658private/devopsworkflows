@@ -16,7 +16,7 @@ jobs:
       - name: repo-sync
         uses: repo-sync/github-sync@v2
         with:
-          source_repo: 'ghost8658private/devopsworkflows'
+          source_repo: 'ghost8658private/ttesting'
           source_branch: 'power'
           destination_branch: 'power'
           github_token: ${{ secrets.PAT_TOKEN }}
