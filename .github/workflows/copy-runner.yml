@@ -13,22 +13,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Sync changes
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-
-          # Fetch and checkout the mirror branch
-          git fetch origin power
-          git checkout power
-
-          # Pull changes from the source repository
-          git pull https://github.com/ghost8658private/ttesting.git power
-
-          # Push changes to the mirror branch
-          git push origin power
-
-      - name: Cleanup
-        run: |
-          cd ..
-          rm -rf destination-repo
+      - name: mirror main
+        uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'ghost8658private/ttesting'
+          source_branch: 'power'
+          destination_branch: 'power'
+          github_token: ${{ secrets.PAT_TOKEN }}
