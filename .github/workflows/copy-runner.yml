@@ -1,44 +1,23 @@
-name: Mirror Branch to Another Repo
-
+name: Mirror Branch
 on:
   push:
     branches:
-      - power
-
+      - main
 jobs:
   mirror:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v2
-
-    - name: Push to target repository
-      env:
-        SOURCE_TOKEN: ${{ secrets.PAT_TOKEN }}
-        TARGET_TOKEN: ${{ secrets.PAT_TOKEN }}
-        SOURCE_BRANCH: power
-        TARGET_REPO: ghost8658private/ttesting
-        TARGET_BRANCH: power
-      run: |
-        git config user.name "${GITHUB_ACTOR}"
-        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-
-        # Clone the target repository
-        git clone https://github.com/${TARGET_REPO}.git
-        cd $(basename ${TARGET_REPO})
-
-        # Fetch the source branch
-        git fetch --no-tags --prune --depth=1 origin "+refs/heads/${SOURCE_BRANCH}:refs/remotes/origin/${SOURCE_BRANCH}"
-
-        # Reset target branch to source branch state
-        git checkout ${TARGET_BRANCH}
-        git reset --hard origin/${SOURCE_BRANCH}
-        git merge origin/${SOURCE_BRANCH}
-
-    - name: GitHub Push
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.PAT_TOKEN }}
-        branch: power
-
+      - uses: actions/checkout@v2
+        with:
+          repository: 'ghost8658private/devopsworkflows'
+          ref: power
+          token: ${{ secrets.PAT_TOKEN }}
+      - uses: actions/checkout@v2
+        with:
+          repository: 'ghost8658private/ttesting'
+          ref: power
+          token: ${{ secrets.PAT_TOKEN }}
+      - name: Mirror branch
+        run: |
+          git fetch --all
+          git merge --allow-unrelated-histories source-repo/main destination-repo/main
