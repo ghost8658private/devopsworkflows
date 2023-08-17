@@ -1,9 +1,21 @@
 name: Mirror Branch
 
 on:
-  push:
-    branches:
-      - newpower
+  workflow_call:
+    inputs:
+      source_repo:
+        required: true
+        type: string
+      source_branch:
+        required: true
+        type: string
+      destination_branch:
+        required: true
+        type: string
+    secrets:
+      ACCESS_TOKEN:
+        required: true
+
 
 jobs:
   repo-sync:
@@ -16,7 +28,7 @@ jobs:
       - name: mirror main
         uses: repo-sync/github-sync@v2
         with:
-          source_repo: 'ghost8658private/ttesting'
-          source_branch: 'power'
-          destination_branch: 'power'
+          source_repo: ${{ inputs.source_repo }}
+          source_branch: ${{ inputs.source_branch }}
+          destination_branch: ${{ inputs.destination_branch }}
           github_token: ${{ secrets.PAT_TOKEN }}
