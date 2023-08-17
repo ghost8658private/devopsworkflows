@@ -2,7 +2,7 @@ name: Mirror Branch
 on:
   push:
     branches:
-      - main
+      - power
 jobs:
   mirror:
     runs-on: ubuntu-latest
