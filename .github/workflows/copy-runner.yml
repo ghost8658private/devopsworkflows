@@ -31,4 +31,4 @@ jobs:
           source_repo: ${{ inputs.source-repo }}
           source_branch: ${{ inputs.source-branch }}
           destination_branch: ${{ inputs.destination-branch }}
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.ACCESS_TOKEN }}
