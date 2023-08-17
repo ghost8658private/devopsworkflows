@@ -18,13 +18,8 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-          # Clone the destination repository
-          git clone https://github.com/ghost8658private/fourth.git
-
-          # Navigate into the destination repository directory
-          cd fourth
-
-          # Checkout the branch
+          # Fetch and checkout the mirror branch
+          git fetch origin power
           git checkout power
 
           # Pull changes from the source repository
