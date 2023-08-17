@@ -1,23 +1,32 @@
 name: Mirror Branch
+
 on:
   push:
     branches:
       - power
+
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out source repository
+        uses: actions/checkout@v2
         with:
           repository: 'ghost8658private/devopsworkflows'
           ref: power
           token: ${{ secrets.PAT_TOKEN }}
-      - uses: actions/checkout@v2
+
+      - name: Check out destination repository
+        uses: actions/checkout@v2
         with:
           repository: 'ghost8658private/ttesting'
           ref: power
           token: ${{ secrets.PAT_TOKEN }}
+
       - name: Mirror branch
         run: |
-          git fetch --all
-          git merge --allow-unrelated-histories # devopsworkflows/power ttesting/power
+          cd ttesting
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git merge --ff-only origin/power
+          git push origin power
