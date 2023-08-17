@@ -18,5 +18,6 @@ jobs:
         with:
           source_repo: 'ghost8658private/ttesting'
           source_branch: 'power'
+          destination_repo: 'ghost8658private/fourth'
           destination_branch: 'power'
           github_token: ${{ secrets.PAT_TOKEN }}
