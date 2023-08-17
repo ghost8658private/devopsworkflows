@@ -20,4 +20,4 @@ jobs:
       - name: Mirror branch
         run: |
           git fetch --all
-          git merge --allow-unrelated-histories source-repo/main destination-repo/main
+          git merge --allow-unrelated-histories source-repo/power destination-repo/power
