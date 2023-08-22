@@ -60,5 +60,6 @@ jobs:
           git remote remove origin
           git remote add upstream git@github.com:${{ inputs.main-repo }}
           git add .
-          git commit -m "Testing"
+          ls
+          #git commit -m "Testing"
           git push git@github.com:${{ inputs.upstream-repo }} clone
