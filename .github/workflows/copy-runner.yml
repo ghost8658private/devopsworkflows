@@ -49,12 +49,12 @@ jobs:
           git checkout clone
           git clone git@github.com:${{ inputs.main-repo }}
           git remote -v
-          ls
           cd tsdk
+          ls
           git remote remove origin
           git remote add upstream git@github.com:${{ inputs.upstream-repo }}
           git remote -v
           #git add .
           #ls
           #git commit -m "Testing"
-          git push git@github.com:${{ inputs.upstream-repo }} clone
+          git push upstream clone
