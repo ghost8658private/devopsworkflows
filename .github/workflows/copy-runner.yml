@@ -43,19 +43,12 @@ jobs:
           git config --global user.email "bbbeeeaaabbb9@gmail.com"
           git config --global user.name "ghost8658private"
 
-      - name: Add Upstream Remote
-        run: |
-          #git remote set-url origin git@github.com:${{ inputs.upstream-repo }}
-          #git remote add upstream git@github.com:${{ inputs.main-repo }}
 
-      - name: Fetch Upstream Changes
-        run: |
-          #git fetch upstream clone
-
-      - name: Push Upstream Changes to Main Repo
+      - name: Push to target repo
         run: |
           git checkout clone
           git clone git@github.com:${{ inputs.main-repo }}
+          ls
           cd tsdk
           git remote remove origin
           git remote add upstream git@github.com:${{ inputs.upstream-repo }}
