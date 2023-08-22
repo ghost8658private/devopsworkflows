@@ -1,9 +1,5 @@
 name: Create and Clone Branch
 
-on:
-  push:
-    branches:
-      - power  
 
 
 jobs:
