@@ -52,9 +52,9 @@ jobs:
           cd tsdk
           ls
           git remote remove origin
-          git remote add upstream git@github.com:${{ inputs.upstream-repo }}
+          git remote add origin git@github.com:${{ inputs.upstream-repo }}
           git remote -v
           #git add .
           #ls
           #git commit -m "Testing"
-          git push upstream clone
+          git push origin clone
