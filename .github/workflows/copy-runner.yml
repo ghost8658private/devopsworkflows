@@ -45,19 +45,19 @@ jobs:
 
       - name: Add Upstream Remote
         run: |
-          git remote set-url origin git@github.com:${{ inputs.main-repo }}
-          git remote add upstream git@github.com:${{ inputs.upstream-repo }}
+          git remote set-url origin git@github.com:${{ inputs.upstream-repo }}
+          #git remote add upstream git@github.com:${{ inputs.main-repo }}
 
       - name: Fetch Upstream Changes
         run: |
-          git fetch upstream clone
+          #git fetch upstream clone
 
       - name: Push Upstream Changes to Main Repo
         run: |
           git checkout clone
-          git config pull.rebase false
-          git pull upstream clone --allow-unrelated-histories
+          #git config pull.rebase false
+          #git pull upstream clone --allow-unrelated-histories
           ls
           #git pull origin main --allow-unrelated-histories 
           #ls
-          git push git@github.com:${{ inputs.main-repo }} clone
+          git push git@github.com:${{ inputs.upstream-repo }} clone
