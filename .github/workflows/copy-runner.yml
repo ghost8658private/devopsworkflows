@@ -49,8 +49,7 @@ jobs:
           secrets: ${{ secrets.ACCESS_TOKEN }}
         run: |
           git checkout main
-          git submodule update --init --recursive
-          git clone -b main git@github.com:${{ inputs.source-repo }} 
+          git clone -b main git@github.com:${{ inputs.source-repo }} source-repo
           cd source-repo
           git remote -v
           git remote set-url origin git@github.com:${{ inputs.main-repo }}
