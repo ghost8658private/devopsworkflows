@@ -3,7 +3,7 @@ name: Sync Upstream to Main
 on:
   workflow_call:
     inputs:
-      upstream-repo:
+      source-repo:
         required: true
         type: string
       main-repo:
