@@ -50,7 +50,8 @@ jobs:
           git clone git@github.com:${{ inputs.source-repo }}
           cd trtos
           ls
-          git remote remove origin
+          git remote -v
+          #git remote remove origin
           git remote set-url origin git@github.com:${{ inputs.main-repo }}
           git remote -v
           git add .
