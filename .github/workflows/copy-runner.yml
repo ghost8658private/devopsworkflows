@@ -53,15 +53,7 @@ jobs:
           ls
           cp -r source-repo/* $GITHUB_WORKSPACE
           ls
-          #git remote add upstream git@github.com:${{ inputs.source-repo }}
           git remote -v
           git add .
           git commit -m "message"
           git push
-          # git config pull.rebase false
-          # #git pull upstream main --allow-unrelated-histories
-          # ls
-          # git remote -v
-          # git remote set-url origin git@github.com:${{ inputs.main-repo }}
-          # git remote -v
-          # git push origin main
