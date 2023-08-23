@@ -49,6 +49,8 @@ jobs:
           git checkout main
           git clone -b main git@github.com:${{ inputs.source-repo }} source-repo
           cp -r source-repo/* $GITHUB_WORKSPACE
+          git remote add upstream git@github.com:${{ inputs.source-repo }}
+          git pull upstream main --allow-unrelated-histories
           #cd trtos
           ls
           git remote -v
