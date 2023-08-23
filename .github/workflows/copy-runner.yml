@@ -47,8 +47,9 @@ jobs:
       - name: Push to target repo
         run: |
           git checkout main
-          git clone -b main git@github.com:${{ inputs.source-repo }}
-          cd trtos
+          git clone -b main git@github.com:${{ inputs.source-repo }} source-repo
+          cp -r source-repo/* $GITHUB_WORKSPACE
+          #cd trtos
           ls
           git remote -v
           git remote set-url origin git@github.com:${{ inputs.main-repo }}
