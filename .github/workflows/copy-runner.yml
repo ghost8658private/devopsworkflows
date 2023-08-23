@@ -47,11 +47,10 @@ jobs:
       - name: Push to target repo
         run: |
           git checkout main
-          git remote add source git@github.com:${{ inputs.source-repo }}
-          git config pull.rebase false
-          git pull source main --allow-unrelated-histories
-          #git fetch git@github.com:${{ inputs.source-repo }} main:main
-          #git merge --allow-unrelated-histories remote-branch
+          git clone git@github.com:${{ inputs.source-repo }}
+          cd trtos
+          cd remote remove origin
+          git remote set-url origin git@github.com:${{ inputs.main-repo }}
           git add .
           git commit -m "Automatically merged and resolved conflicts"
           git push origin main
