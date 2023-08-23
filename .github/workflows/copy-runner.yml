@@ -49,11 +49,12 @@ jobs:
           secrets: ${{ secrets.ACCESS_TOKEN }}
         run: |
           git checkout main
-          git clone -b main git@github.com:${{ inputs.source-repo }} source-repo
-          ls
-          cp -r source-repo/* $GITHUB_WORKSPACE
-          ls
+          git clone -b main git@github.com:${{ inputs.source-repo }} 
+          cd source-repo
+          git remote -v
+          git remote set-url origin git@github.com:${{ inputs.main-repo }}
           git remote -v
           git add .
           git commit -m "message"
           git push
+          
