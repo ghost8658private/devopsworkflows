@@ -48,8 +48,10 @@ jobs:
         run: |
           git checkout main
           git clone -b main git@github.com:${{ inputs.source-repo }} source-repo
+          ls
           cp -r source-repo/* $GITHUB_WORKSPACE
           git remote add upstream git@github.com:${{ inputs.source-repo }}
+          git config pull.rebase false
           git pull upstream main --allow-unrelated-histories
           #cd trtos
           ls
