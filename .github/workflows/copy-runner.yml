@@ -1,34 +1,55 @@
-name: Mirror Branch
+name: Sync Upstream to Main
 
 on:
   workflow_call:
     inputs:
-      source-repo:
+      upstream-repo:
         required: true
         type: string
-      source-branch:
-        required: true
-        type: string
-      destination-branch:
+      main-repo:
         required: true
         type: string
     secrets:
       ACCESS_TOKEN:
         required: true
-
+      SSH_KEY:
+        required: true
 
 jobs:
-  repo-sync:
+  synchronize:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
-      - name: mirror main
-        uses: repo-sync/github-sync@v2
-        with:
-          source_repo: ${{ inputs.source-repo }}
-          source_branch: ${{ inputs.source-branch }}
-          destination_branch: ${{ inputs.destination-branch }}
-          github_token: ${{ secrets.ACCESS_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+
+      - name: Add SSH key
+        env:
+            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+            mkdir -p /home/runner/.ssh
+            ssh-keyscan github.com >> /home/runner/.ssh/known_hosts
+            # SSH_KEY is the name of the repository secret
+            echo "${{ secrets.SSH_KEY }}" > /home/runner/.ssh/id_rsa 
+            chmod 600 /home/runner/.ssh/id_rsa 
+            chmod 700 /home/runner/.ssh
+            ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
+            ssh-add /home/runner/.ssh/id_rsa 
+
+
+      - name: Set Git Credentials
+        run: |
+          git config --global user.email "bbbeeeaaabbb9@gmail.com"
+          git config --global user.name "ghost8658private"
+
+
+      - name: Push to target repo
+        run: |
+          git remote add origin git@github.com:${{ inputs.main-repo }}
+          git checkout main
+          git fetch git@github.com:${{ inputs.source-repo }} main:main
+          git merge --allow-unrelated-histories remote-branch
+          git add .
+          git commit -m "Automatically merged and resolved conflicts"
+          git push origin main
