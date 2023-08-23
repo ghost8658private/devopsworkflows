@@ -49,8 +49,10 @@ jobs:
           git checkout main
           git clone git@github.com:${{ inputs.source-repo }}
           cd trtos
-          cd remote remove origin
+          ls
+          git remote remove origin
           git remote set-url origin git@github.com:${{ inputs.main-repo }}
+          git remote -v
           git add .
           git commit -m "Automatically merged and resolved conflicts"
           git push origin main
