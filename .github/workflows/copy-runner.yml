@@ -45,6 +45,8 @@ jobs:
 
 
       - name: Push to target repo
+        env:
+          secrets: ${{ secrets.ACCESS_TOKEN }}
         run: |
           git checkout main
           git clone -b main git@github.com:${{ inputs.source-repo }} source-repo
