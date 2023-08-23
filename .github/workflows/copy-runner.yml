@@ -55,6 +55,6 @@ jobs:
           git remote set-url origin git@github.com:${{ inputs.main-repo }}
           git remote -v
           git add .
-          git commit -m "message"
+          #git commit -m "message"
           git push
           
