@@ -32,21 +32,11 @@ jobs:
 
 
       - name: Clone source repository
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ inputs.source-repo }}
-          ref: main
-          fetch-depth: 0
-          path: source-repo
-
+        run: git clone https://${{ secrets.ACCESS_TOKEN }}@${{ inputs.source-repo }} --depth 1 source-repo
+      
       - name: Clone target repository
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ inputs.target-repo }}
-          ref: main
-          fetch-depth: 0
-          path: target-repo
-
+        run: git clone https://${{ secrets.ACCESS_TOKEN }}@${{ inputs.target-repo }} --depth 1 target-repo
+  
       - name: Merge source to target
         run: |
           cd target-repo
