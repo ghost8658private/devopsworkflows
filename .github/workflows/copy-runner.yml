@@ -31,17 +31,12 @@ jobs:
           git config --global user.name "ghost8658private"
 
 
-      - name: Clone source repository
-        run: git clone https://${{ secrets.ACCESS_TOKEN }}@${{ inputs.source-repo }} --depth 1 source-repo
-      
-      - name: Clone target repository
-        run: git clone https://${{ secrets.ACCESS_TOKEN }}@${{ inputs.target-repo }} --depth 1 target-repo
-  
-      - name: Merge source to target
+      - name: Push to target repo
         run: |
-          cd target-repo
-          git remote add source-repo ${{ inputs.source-repo }}
-          git fetch source-repo
-          git merge --no-commit --allow-unrelated-histories source-repo/main
-          git commit -m "Merge ${inputs.source-repo-name} repository to target"
-          git push
+          git clone ${{ inputs.source-repo }}
+          cd ${{ inputs.source-repo-name }}
+          git remote -v
+          # git remote remove origin
+          git remote set-url --push origin ${{ inputs.target-repo }}
+          git remote -v
+          git push -f #--all ${{ inputs.target-repo }}
