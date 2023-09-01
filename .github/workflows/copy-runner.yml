@@ -44,6 +44,6 @@ jobs:
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
           git remote -v
-          git remote remove origin
-          git remote add origin ${{ inputs.target-repo }}
+          # git remote remove origin
+          git remote set-url --push ${{ inputs.target-repo }}
           git push -f --all ${{ inputs.target-repo }}
