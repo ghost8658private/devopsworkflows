@@ -45,5 +45,5 @@ jobs:
           cd ${{ inputs.source-repo-name }}
           git remote -v
           # git remote remove origin
-          git remote set-url --push ${{ inputs.target-repo }}
+          git remote set-url --push origin ${{ inputs.target-repo }}
           git push -f --all ${{ inputs.target-repo }}
