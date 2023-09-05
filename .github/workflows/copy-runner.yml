@@ -1,4 +1,4 @@
-name: First mirror from tclone to rtos work
+name: Mirror Repositories
 
 on:
   workflow_call:
@@ -18,18 +18,14 @@ on:
       third-repo:
         required: true
         type: string
-    secrets:
-      ACCESS_TOKEN:
-        required: true
 
 jobs:
-  first-mirror:
+  mirror-repos:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-    
 
       - name: Set Git Credentials
         run: |
@@ -38,7 +34,7 @@ jobs:
           git config --global credential.helper store
           echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" > ~/.git-credentials
 
-      - name: Push from ${{ inputs.source-repo-name }}
+      - name: Clone source repository
         run: |
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
@@ -49,24 +45,7 @@ jobs:
             git push --force origin $branch
           done
 
-
-  second-mirror:
-    runs-on: ubuntu-latest
-    needs: first-mirror
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-    
-
-      - name: Set Git Credentials
-        run: |
-          git config --global user.email "bbbeeeaaabbb9@gmail.com"
-          git config --global user.name "ghost8658private"
-          git config --global credential.helper store
-          echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" > ~/.git-credentials
-
-      - name: Push from ${{ inputs.source-repo-name }}
+      - name: Clone target repository
         run: |
           git clone ${{ inputs.target-repo }}
           cd ${{ inputs.target-repo-name }}
@@ -76,4 +55,3 @@ jobs:
           for branch in $branches; do
             git push --force origin $branch
           done
-
