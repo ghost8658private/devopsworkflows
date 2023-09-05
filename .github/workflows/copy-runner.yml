@@ -27,7 +27,7 @@ jobs:
   first-mirror:
     runs-on: ubuntu-latest
     env:
-      ACCESS_TOKEN: ${{ secrets.PAT_TOKEN }}
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
     steps:
       - name: Checkout code
@@ -51,7 +51,7 @@ jobs:
   second-mirror:
     runs-on: ubuntu-latest
     env:
-      ACCESS_TOKEN: ${{ secrets.PAT_TOKEN }}
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
     needs: first-mirror
 
     steps:
