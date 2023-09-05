@@ -43,16 +43,7 @@ jobs:
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
           git remote set-url --push origin ${{ inputs.target-repo }}
-          for branch in $(git branch -r --format "%(refname:short)" | grep -v 'origin/HEAD' | sed 's/origin\///'); do
-            # Check if the branch exists in the target repo
-            if ! git ls-remote --exit-code --heads ${{ inputs.target-repo }} "refs/heads/$branch"; then
-              # If the branch doesn't exist, create it
-              git push --force origin "refs/heads/$branch:refs/heads/$branch"
-            else
-              # If the branch exists, push it without creating a new one
-              git push --force origin "refs/heads/$branch"
-            fi
-          done
+          git push --force origin
 
   second-mirror:
     runs-on: ubuntu-latest
@@ -75,13 +66,4 @@ jobs:
           git clone ${{ inputs.target-repo }}
           cd ${{ inputs.target-repo-name }}
           git remote set-url --push origin ${{ inputs.third-repo }}
-          for branch in $(git branch -r --format "%(refname:short)" | grep -v 'origin/HEAD' | sed 's/origin\///'); do
-            # Check if the branch exists in the third repo
-            if ! git ls-remote --exit-code --heads ${{ inputs.third-repo }} "refs/heads/$branch"; then
-              # If the branch doesn't exist, create it
-              git push --force origin "refs/heads/$branch:refs/heads/$branch"
-            else
-              # If the branch exists, push it without creating a new one
-              git push --force origin "refs/heads/$branch"
-            fi
-          done
+          git push --force origin
