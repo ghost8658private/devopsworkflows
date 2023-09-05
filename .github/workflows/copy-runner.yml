@@ -44,13 +44,13 @@ jobs:
           cd ${{ inputs.source-repo-name }}
           git remote set-url --push origin ${{ inputs.target-repo }}
           for branch in $(git branch -r --format "%(refname:short)"); do
-            # Check if the branch exists in the third repo
-            if ! git ls-remote --exit-code --heads ${{ inputs.target-repo }} $branch; then
+            # Check if the branch exists in the target repo
+            if ! git ls-remote --exit-code --heads ${{ inputs.target-repo }} "refs/heads/$branch"; then
               # If the branch doesn't exist, create it
-              git push --force origin "$branch:$branch"
+              git push --force origin "refs/heads/$branch:refs/heads/$branch"
             else
               # If the branch exists, push it without creating a new one
-              git push --force origin "$branch"
+              git push --force origin "refs/heads/$branch"
             fi
           done
 
@@ -77,11 +77,11 @@ jobs:
           git remote set-url --push origin ${{ inputs.third-repo }}
           for branch in $(git branch -r --format "%(refname:short)"); do
             # Check if the branch exists in the third repo
-            if ! git ls-remote --exit-code --heads ${{ inputs.third-repo }} $branch; then
+            if ! git ls-remote --exit-code --heads ${{ inputs.third-repo }} "refs/heads/$branch"; then
               # If the branch doesn't exist, create it
-              git push --force origin "$branch:$branch"
+              git push --force origin "refs/heads/$branch:refs/heads/$branch"
             else
               # If the branch exists, push it without creating a new one
-              git push --force origin "$branch"
+              git push --force origin "refs/heads/$branch"
             fi
           done
