@@ -43,7 +43,9 @@ jobs:
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
           git remote set-url --push origin ${{ inputs.target-repo }}
-          git push --force origin
+          for branch in $(git branch -r --format "%(refname:short)"); do
+            git push --force origin "$branch:$branch"
+          done
 
 
   second-mirror:
@@ -62,9 +64,11 @@ jobs:
           git config --global credential.helper store
           echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" > ~/.git-credentials
 
-      - name: Push from ${{ inputs.source-repo-name }}
+      - name: Push from ${{ inputs.target-repo-name }}
         run: |
           git clone ${{ inputs.target-repo }}
           cd ${{ inputs.target-repo-name }}
           git remote set-url --push origin ${{ inputs.third-repo }}
-          git push --force origin
+          for branch in $(git branch -r --format "%(refname:short)"); do
+            git push --force origin "$branch:$branch"
+          done
