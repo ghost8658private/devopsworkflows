@@ -12,12 +12,18 @@ on:
       source-repo-name:
         required: true
         type: string
+      target-repo-name:
+        required: true
+        type: string
+      third-repo:
+        required: true
+        type: string
     secrets:
       ACCESS_TOKEN:
         required: true
 
 jobs:
-  synchronize:
+  first-mirror:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,6 +43,33 @@ jobs:
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
           git remote set-url --push origin ${{ inputs.target-repo }}
+          git fetch --all
+          branches=$(git for-each-ref --format='%(refname:short)' refs/heads | grep -v HEAD)
+          for branch in $branches; do
+            git push --force origin $branch
+          done
+
+
+  second-mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+
+      - name: Set Git Credentials
+        run: |
+          git config --global user.email "bbbeeeaaabbb9@gmail.com"
+          git config --global user.name "ghost8658private"
+          git config --global credential.helper store
+          echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" > ~/.git-credentials
+
+      - name: Push from ${{ inputs.source-repo-name }}
+        run: |
+          git clone ${{ inputs.target-repo }}
+          cd ${{ inputs.target-repo-name }}
+          git remote set-url --push origin ${{ inputs.third-repo }}
           git fetch --all
           branches=$(git for-each-ref --format='%(refname:short)' refs/heads | grep -v HEAD)
           for branch in $branches; do
