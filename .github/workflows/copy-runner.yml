@@ -29,14 +29,12 @@ jobs:
         run: |
           git config --global user.email "bbbeeeaaabbb9@gmail.com"
           git config --global user.name "ghost8658private"
+          git config --global credential.helper store
+          echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" > ~/.git-credentials
 
-
-      - name: Push to target repo
+      - name: Push from ${{ inputs.source-repo-name }}
         run: |
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
-          git remote -v
-          # git remote remove origin
           git remote set-url --push origin ${{ inputs.target-repo }}
-          git remote -v
-          git push -f #--all ${{ inputs.target-repo }}
+          git push --force origin
