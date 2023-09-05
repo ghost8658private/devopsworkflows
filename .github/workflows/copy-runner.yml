@@ -26,9 +26,6 @@ on:
 jobs:
   first-mirror:
     runs-on: ubuntu-latest
-    env:
-      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -50,8 +47,6 @@ jobs:
 
   second-mirror:
     runs-on: ubuntu-latest
-    env:
-      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
     needs: first-mirror
 
     steps:
