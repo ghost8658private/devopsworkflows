@@ -52,6 +52,7 @@ jobs:
 
   second-mirror:
     runs-on: ubuntu-latest
+    needs: first-mirror
 
     steps:
       - name: Checkout code
