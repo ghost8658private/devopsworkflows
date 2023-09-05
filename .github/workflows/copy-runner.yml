@@ -1,4 +1,4 @@
-name: Mirror Repositories
+name: First mirror from tclone to rtos work
 
 on:
   workflow_call:
@@ -23,12 +23,13 @@ on:
         required: true
 
 jobs:
-  mirror-repos:
+  first-mirror:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+    
 
       - name: Set Git Credentials
         run: |
@@ -37,24 +38,33 @@ jobs:
           git config --global credential.helper store
           echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" > ~/.git-credentials
 
-      - name: Clone source repository
+      - name: Push from ${{ inputs.source-repo-name }}
         run: |
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
           git remote set-url --push origin ${{ inputs.target-repo }}
-          git fetch --all
-          branches=$(git for-each-ref --format='%(refname:short)' refs/heads | grep -v HEAD)
-          for branch in $branches; do
-            git push --force origin $branch
-          done
+          git push --force origin
 
-      - name: Clone target repository
+
+  second-mirror:
+    runs-on: ubuntu-latest
+    needs: first-mirror
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+
+      - name: Set Git Credentials
+        run: |
+          git config --global user.email "bbbeeeaaabbb9@gmail.com"
+          git config --global user.name "ghost8658private"
+          git config --global credential.helper store
+          echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" > ~/.git-credentials
+
+      - name: Push from ${{ inputs.source-repo-name }}
         run: |
           git clone ${{ inputs.target-repo }}
           cd ${{ inputs.target-repo-name }}
           git remote set-url --push origin ${{ inputs.third-repo }}
-          git fetch --all
-          branches=$(git for-each-ref --format='%(refname:short)' refs/heads | grep -v HEAD)
-          for branch in $branches; do
-            git push --force origin $branch
-          done
+          git push --force origin
