@@ -18,13 +18,12 @@ on:
       third-repo:
         required: true
         type: string
-    secrets:
-      ACCESS_TOKEN:
-        required: true
 
 jobs:
   first-mirror:
     runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
     steps:
       - name: Checkout code
@@ -43,10 +42,12 @@ jobs:
           git clone ${{ inputs.source-repo }}
           cd ${{ inputs.source-repo-name }}
           git remote set-url --push origin ${{ inputs.target-repo }}
-          git push --force origin
+          git push --force 
 
   second-mirror:
     runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
     needs: first-mirror
 
     steps:
@@ -66,4 +67,4 @@ jobs:
           git clone ${{ inputs.target-repo }}
           cd ${{ inputs.target-repo-name }}
           git remote set-url --push origin ${{ inputs.third-repo }}
-          git push --force origin
+          git push --force 
